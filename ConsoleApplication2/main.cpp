@@ -14,22 +14,23 @@
 
 bool gameIsHappening = true;
 
-
-class Snake {
-    private:
-        std::array<bool, BOARD_SIZE * BOARD_SIZE> data;
-
-        int index(int x, int y) const {
-            return y * BOARD_SIZE + x;
-        }
-
-    public:
-        explicit Snake() : data{} {
-            data.fill(false);
-            data[0] = true;
-        }
-
-};
+//
+//class Snake {
+//    private:
+//        std::array<bool, BOARD_SIZE * BOARD_SIZE> data;
+//
+//        int index(int x, int y) const {
+//            return y * BOARD_SIZE + x;
+//        }
+//
+//    public:
+//        explicit Snake() : data{} {
+//            data.fill(false);
+//            data[0] = true;
+//        }
+//
+//};
+//
 
 struct Player {
     int playerLength;
@@ -39,12 +40,14 @@ struct Player {
 };
 
 
-void startNewGame(Player &plr) {
+void startNewGame(Player &plr, Position PrevPlayerPosition) {
 
     plr.fruitJustEaten = false;
     plr.playerLength = 1;
     plr.shortenSnake = true;
     plr.score = 0;
+
+    PrevPlayerPosition = { 0,0 };
 }
 
 
@@ -69,11 +72,6 @@ char toUpperCase(char ch) {
     return ch;
 }
 
-
-bool isDirectionValid() {
-    return true;
-}
-/// FINISH!!!
 
 Position getDirectionDelta(char hitKey) {
 
@@ -122,7 +120,6 @@ Position getNewPlayerPosition(char hitKey, Position playerPosition) {
 
 }
 
-//void updateSnakeInfo
 
 void updateBoard(std::vector<std::vector<char>>& board, Position fruitPosition, Position newPlayerPosition, Position removedPlayerPosition, Player &plr) {
 
@@ -147,16 +144,13 @@ int main()
     srand((unsigned)time(0));
 
     Position fruitPos = getNewFruitPosition();
-    //auto board = generateBoard(fruitPos);
 
     Board board(fruitPos);
 
+    Position prevPlayerPosition;
+
     Player plr;
-    startNewGame(plr);
-
-
-
-    //Position prevPlayerPosition = { 0,0 };
+    startNewGame(plr, prevPlayerPosition);
 
     //std::queue<Position> previousPositions;
 
@@ -170,12 +164,12 @@ int main()
             char hitKey = _getch();
             hitKey = toUpperCase(hitKey);
 
+            Position newPlayerPosition = getNewPlayerPosition(hitKey, prevPlayerPosition);
+            board.updateBoard(newPlayerPosition, fruitPos, {0,0}, plr.fruitJustEaten);
 
             /*prevPlayerPosition = previousPositions.front();
             
-            Position newPlayerPosition = getNewPlayerPosition(hitKey, prevPlayerPosition);
             previousPositions.push(newPlayerPosition);*/
-
 
             //updateBoard(board, fruitPos, newPlayerPosition, prevPlayerPosition, plr);
 

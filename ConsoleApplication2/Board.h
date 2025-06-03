@@ -8,29 +8,18 @@
 
 class Board {
 private:
+
     std::array<char, BOARD_SIZE* BOARD_SIZE> data;
 
-    int index(int x, int y) const {
-        return y * BOARD_SIZE + x;
-    }
+    int index(int x, int y) const;
 
 public:
-    explicit Board(const Position fruitPos) : data{} {
 
-        data.fill(BOARD_CHAR);
-        data[index(fruitPos.x, fruitPos.y)] = FRUIT_CHAR;
+    explicit Board(const Position fruitPos);
 
-    }
+    void printBoard() const;
 
-
-    void printBoard() const {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                std::cout << ' ' << data[index(j, i)] << ' ';
-            }
-            std::cout << '\n';
-        }
-    }
+    void updateBoard(const Position playerPosition, const Position fruitPos, const Position removedPlayerPosition, bool & fruitJustEaten);
 
 };
 
