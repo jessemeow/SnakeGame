@@ -29,6 +29,7 @@ class Snake {
             data[0] = true;
         }
 
+        //omfg
 };
 
 struct Player {
