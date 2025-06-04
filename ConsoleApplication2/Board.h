@@ -19,7 +19,8 @@ public:
 
     void printBoard() const;
 
-    void updateBoard(const Position playerPosition, const Position fruitPos, const Position removedPlayerPosition, bool & fruitJustEaten);
+    void updateBoard(const Position playerSnakeHead, const Position fruitPos,
+                    const Position removedPlayerPosition, bool & fruitJustEaten);
 
 };
 

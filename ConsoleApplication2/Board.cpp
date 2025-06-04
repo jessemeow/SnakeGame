@@ -21,7 +21,7 @@ void Board::printBoard() const {
         std::cout << i << "  ";
     }
     std::cout << '\n';
-
+    ///
 
     for (int i = 0; i < BOARD_SIZE; i++) {
         std::cout << i << ' '; ///  REMOVE!
@@ -33,12 +33,15 @@ void Board::printBoard() const {
 }
 
 
-void Board::updateBoard(const Position newPlayerPosition, const Position fruitPos, const Position removedPlayerPosition, bool &fruitJustEaten) {
+void Board::updateBoard(const Position playerSnakeHead, const Position fruitPos,
+                        const Position removedPlayerPosition, bool &fruitJustEaten) {
+
+    data[index(fruitPos.x, fruitPos.y)] = FRUIT_CHAR;
     
-    
-    if (newPlayerPosition.x == fruitPos.x && newPlayerPosition.y == fruitPos.y) {
+    if (playerSnakeHead.x == fruitPos.x && playerSnakeHead.y == fruitPos.y) {
         fruitJustEaten = true;
    }
 
-    data[index(newPlayerPosition.x, newPlayerPosition.y)] = SNAKE_CHAR;
+    data[index(removedPlayerPosition.x, removedPlayerPosition.y)] = BOARD_CHAR;
+    data[index(playerSnakeHead.x, playerSnakeHead.y)] = SNAKE_CHAR;
 }
