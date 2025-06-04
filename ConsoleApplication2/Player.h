@@ -3,9 +3,13 @@
 
 class Player
 {
+	private:
+		int score;
+
 	public:
 		Player();
-		int score;
 		void printScore();
+		void increaseScore();
+		void resetScore();
 };
 

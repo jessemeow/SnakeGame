@@ -28,16 +28,18 @@ class Game
 		Position prevPlayerPosition;
 		Position playerSnakeHead;
 		
-		Position getNewFruitPosition();
+		Position getNewFruitPosition(std::queue<Position> previousPositionsQueue);
 		Position getNewPlayerPosition(char hitKey, Position playerPosition);
 		Position getDirectionDelta(char hitKey);
 		char toUpperCase(char ch);
+
+		bool containsPosition(std::queue<Position> positions, const Position& targetPosition);
 
 	public:
 		Game();
 		Board board;
 		void handleInput(char hitKey);
 		void reset(Player& plr, Position& PrevPlayerPosition);
-		void print(Board board, Player plr);
+		void print(Board board);
 };
 

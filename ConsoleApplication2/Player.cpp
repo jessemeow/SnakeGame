@@ -7,3 +7,12 @@ Player::Player() {
 void Player::printScore() {
 	std::cout << score << '\n';
 }
+
+void Player::increaseScore() {
+	score += 100;
+}
+
+
+void Player::resetScore() {
+	score = 0;
+}

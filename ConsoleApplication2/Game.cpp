@@ -1,10 +1,27 @@
 #include "Game.h"
 
-Position Game::getNewFruitPosition() {
-    Position newFruitPosition;
+bool Game::containsPosition(std::queue<Position> positions, const Position& targetPosition) {
+    while (!positions.empty()) {
+        if (targetPosition.x == positions.front().x && targetPosition.y == positions.front().y) {
+            return true;
+        }
+        else {
+            positions.pop();
+        }
+    }
+    return false;
+}
 
+Position Game::getNewFruitPosition(std::queue<Position> previousPositionsQueue) {
+    Position newFruitPosition;
+    
     newFruitPosition.x = rand() % BOARD_SIZE;
     newFruitPosition.y = rand() % BOARD_SIZE;
+
+    while (containsPosition(previousPositionsQueue, newFruitPosition)) {
+        newFruitPosition.x = rand() % BOARD_SIZE;
+        newFruitPosition.y = rand() % BOARD_SIZE;
+    }
 
     return newFruitPosition;
 }
@@ -62,7 +79,7 @@ char Game::toUpperCase(char ch) {
     return ch;
 }
 
-Game::Game() : fruitPos(getNewFruitPosition()), board(fruitPos), fruitJustEaten(false) {
+Game::Game() : fruitPos(getNewFruitPosition({})), board(fruitPos), fruitJustEaten(false) {
 
     board = Board(fruitPos);
     Position prevPlayerPosition = { 0,0 };
@@ -75,11 +92,17 @@ Game::Game() : fruitPos(getNewFruitPosition()), board(fruitPos), fruitJustEaten(
 void Game::reset(Player& plr, Position& PrevPlayerPosition) {
 
     fruitJustEaten = false;
-    plr.score = 0;
+    plr.resetScore();
+
     PrevPlayerPosition = { 0,0 };
+    previousPositionsQueue = {};
+    previousPositionsQueue.push(prevPlayerPosition);
+
+    fruitPos = getNewFruitPosition(previousPositionsQueue);
+    board = Board(fruitPos);
 }
 
-void Game::print(Board board, Player plr) {
+void Game::print(Board board) {
     board.printBoard();
     plr.printScore();
 }
@@ -101,8 +124,8 @@ void Game::handleInput(char hitKey) {
         previousPositionsQueue.pop();
     }
     else {
-        fruitPos = getNewFruitPosition();
-        plr.score += 100;
+        fruitPos = getNewFruitPosition(previousPositionsQueue);
+        plr.increaseScore();
     }
 
     prevPlayerPosition = playerSnakeHead;

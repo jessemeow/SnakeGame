@@ -1,5 +1,8 @@
 #include <iostream>
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
 #include <conio.h>
 #include <windows.h>
 #include <cstdlib> 
@@ -21,7 +24,6 @@ int main()
     srand((unsigned)time(0));
 
     Game game;
-    Player plr;
 
     while (gameIsHappening) {
 
@@ -30,7 +32,7 @@ int main()
             
             game.handleInput(hitKey);
             system("cls");
-            game.print(game.board, plr);
+            game.print(game.board);
 
         }
 
