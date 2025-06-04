@@ -13,14 +13,19 @@ bool Game::containsPosition(std::queue<Position> positions, const Position& targ
 }
 
 Position Game::getNewFruitPosition(std::queue<Position> previousPositionsQueue) {
+
+    std::default_random_engine randGenerator;
+    std::uniform_int_distribution<int> distribution(0, BOARD_SIZE-1);
+
+
     Position newFruitPosition;
     
-    newFruitPosition.x = rand() % BOARD_SIZE;
-    newFruitPosition.y = rand() % BOARD_SIZE;
+    newFruitPosition.x = distribution(randGenerator);
+    newFruitPosition.y = distribution(randGenerator);
 
     while (containsPosition(previousPositionsQueue, newFruitPosition)) {
-        newFruitPosition.x = rand() % BOARD_SIZE;
-        newFruitPosition.y = rand() % BOARD_SIZE;
+        newFruitPosition.x = distribution(randGenerator);
+        newFruitPosition.y = distribution(randGenerator);
     }
 
     return newFruitPosition;

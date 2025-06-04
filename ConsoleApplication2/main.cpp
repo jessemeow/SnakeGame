@@ -5,8 +5,6 @@
 
 #include <conio.h>
 #include <windows.h>
-#include <cstdlib> 
-#include <ctime>
 
 #include <queue>
 #include <array>
@@ -30,8 +28,6 @@ char toUpperCase(char ch) {
 
 int main()
 {
-    srand((unsigned)time(0));
-
     Game game;
     game.print(game.board);
     char hitKey = 'S';

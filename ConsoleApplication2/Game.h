@@ -1,10 +1,8 @@
 #pragma once
 #include <iostream>
 
-#include <conio.h>
 #include <windows.h>
-#include <cstdlib> 
-#include <ctime>
+#include <random>
 
 #include <queue>
 #include <array>
