@@ -19,25 +19,32 @@
 
 bool gameIsHappening = true;
 
+char toUpperCase(char ch) {
+
+    if (ch >= 'a' && ch <= 'z') {
+        ch -= 32;
+    }
+
+    return ch;
+}
+
 int main()
 {
     srand((unsigned)time(0));
 
     Game game;
+    game.print(game.board);
 
     while (gameIsHappening) {
 
         if (_kbhit()) {
             char hitKey = _getch();
-            
+            hitKey = toUpperCase(hitKey);
+
             game.handleInput(hitKey);
-            system("cls");
-            game.print(game.board);
-
+            
         }
-
         Sleep(SLEEP_TIME);
-
     }
 }
 

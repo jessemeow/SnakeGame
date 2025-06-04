@@ -18,28 +18,32 @@
 
 class Game
 {
-	private:
-		Position fruitPos;
-		Player plr;
+private:
+	Position fruitPos;
+	Player plr;
 
-		bool fruitJustEaten;
+	bool fruitJustEaten;
 
-		std::queue<Position> previousPositionsQueue;
-		Position prevPlayerPosition;
-		Position playerSnakeHead;
-		
-		Position getNewFruitPosition(std::queue<Position> previousPositionsQueue);
-		Position getNewPlayerPosition(char hitKey, Position playerPosition);
-		Position getDirectionDelta(char hitKey);
-		char toUpperCase(char ch);
+	std::queue<Position> previousPositionsQueue;
+	Position prevPlayerPosition;
+	Position playerSnakeHead;
 
-		bool containsPosition(std::queue<Position> positions, const Position& targetPosition);
+	Position getNewFruitPosition(std::queue<Position> previousPositionsQueue);
+	Position getNewPlayerPosition(char hitKey, Position playerPosition);
+	Position getDirectionDelta(char hitKey);
 
-	public:
-		Game();
-		Board board;
-		void handleInput(char hitKey);
-		void reset(Player& plr, Position& PrevPlayerPosition);
-		void print(Board board);
+	bool containsPosition(std::queue<Position> positions, const Position& targetPosition);
+	bool isKeyValid(const char hitKey);
+	bool isDirectionValid(const Position newPlayerPosition, const std::queue<Position> previousPositionsQueue);
+
+public:
+	Game();
+	Board board;
+	void handleInput(char hitKey);
+	void reset(Player& plr, Position& prevPlayerPosition);
+	void print(Board const& board);
+	void gameOverText();
+	void printGameInfo();
+	void exitGame();
 };
 

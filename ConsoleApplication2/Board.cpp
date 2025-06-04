@@ -15,16 +15,16 @@ int Board::index(int x, int y) const {
 
 void Board::printBoard() const {
 
-    /// REMOVE VVV !
+    /*
     std::cout << "   ";
     for (int i = 0; i < BOARD_SIZE; i++) {
         std::cout << i << "  ";
     }
     std::cout << '\n';
-    ///
+    */
 
     for (int i = 0; i < BOARD_SIZE; i++) {
-        std::cout << i << ' '; ///  REMOVE!
+        //std::cout << i << ' '; 
         for (int j = 0; j < BOARD_SIZE; j++) {
             std::cout << ' ' << data[index(j, i)] << ' ';
         }

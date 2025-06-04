@@ -26,6 +26,32 @@ Position Game::getNewFruitPosition(std::queue<Position> previousPositionsQueue) 
     return newFruitPosition;
 }
 
+bool Game::isDirectionValid(const Position newPlayerPosition, const std::queue<Position> previousPositionsQueue) {
+
+    if (newPlayerPosition.x < 0 || newPlayerPosition.x >= BOARD_SIZE) {
+        return false;
+    }
+
+    if (newPlayerPosition.y < 0 || newPlayerPosition.y >= BOARD_SIZE) {
+        return false;
+    }
+
+    if (containsPosition(previousPositionsQueue, newPlayerPosition)) {
+        return false;
+    }
+
+    return true;
+}
+
+bool Game::isKeyValid(const char hitKey) {
+
+    if (hitKey == 'W' || hitKey == 'A' || hitKey == 'S' || hitKey == 'D' || hitKey == 'Q') {
+        return true;
+    }
+
+    return false;
+}
+
 Position Game::getNewPlayerPosition(char hitKey, Position playerPosition) {
     Position playerPositionDelta = getDirectionDelta(hitKey);
 
@@ -33,15 +59,6 @@ Position Game::getNewPlayerPosition(char hitKey, Position playerPosition) {
 
     newPlayerPosition.x += playerPositionDelta.x;
     newPlayerPosition.y += playerPositionDelta.y;
-
-    if (newPlayerPosition.x < 0 || newPlayerPosition.x >= BOARD_SIZE) {
-        newPlayerPosition.x = playerPosition.x;
-    }
-
-    if (newPlayerPosition.y < 0 || newPlayerPosition.y >= BOARD_SIZE) {
-        newPlayerPosition.y = playerPosition.y;
-    }
-
 
     return newPlayerPosition;
 }
@@ -70,14 +87,6 @@ Position Game::getDirectionDelta(char hitKey) {
     return directionDelta;
 }
 
-char Game::toUpperCase(char ch) {
-
-    if (ch >= 'a' && ch <= 'z') {
-        ch -= 32;
-    }
-
-    return ch;
-}
 
 Game::Game() : fruitPos(getNewFruitPosition({})), board(fruitPos), fruitJustEaten(false) {
 
@@ -102,35 +111,76 @@ void Game::reset(Player& plr, Position& PrevPlayerPosition) {
     board = Board(fruitPos);
 }
 
-void Game::print(Board board) {
-    board.printBoard();
-    plr.printScore();
+void Game::printGameInfo() {
+    std::cout << "\n   Press W, A, S, D to move.\n" <<
+                 "       Press Q to quit.\n";
 }
+
+void Game::print(Board const& board) {
+    board.printBoard();
+    std::cout << "\nSCORE:  ";
+    plr.printScore();
+    printGameInfo();
+}
+
+void Game::gameOverText() {
+    reset(plr, prevPlayerPosition);
+    system("cls");
+    std::cout << "\n\n\n\t\t--- YOU LOST! ---\n\n"
+              << "\t\t    SCORE: ";
+    plr.printScore();
+
+    std::cout << "\n\t   Press W, A, S, D to restart.\n\t\t        ";
+}
+
+void Game::exitGame() {
+    system("cls");
+    exit(0);
+}
+
 
 void Game::handleInput(char hitKey) {
 
-    hitKey = toUpperCase(hitKey);
+    if (!isKeyValid(hitKey)) {
+        return;
+    }
+    if (hitKey == 'Q') {
+        exitGame();
+    }
 
     Position playerSnakeHead = getNewPlayerPosition(hitKey, prevPlayerPosition);
 
-    previousPositionsQueue.push(playerSnakeHead);
+    bool validDirection = isDirectionValid(playerSnakeHead, previousPositionsQueue);
 
-    Position removedPosition = previousPositionsQueue.front();
+    if (!validDirection) {
 
-    board.updateBoard(playerSnakeHead, fruitPos, removedPosition, fruitJustEaten);
+        gameOverText();
 
-
-    if (!fruitJustEaten) {
-        previousPositionsQueue.pop();
     }
     else {
-        fruitPos = getNewFruitPosition(previousPositionsQueue);
-        plr.increaseScore();
+
+        previousPositionsQueue.push(playerSnakeHead);
+
+        Position removedPosition = previousPositionsQueue.front();
+
+        board.updateBoard(playerSnakeHead, fruitPos, removedPosition, fruitJustEaten);
+
+        system("cls");
+        print(board);
+
+
+        if (!fruitJustEaten) {
+            previousPositionsQueue.pop();
+        }
+        else {
+            fruitPos = getNewFruitPosition(previousPositionsQueue);
+            plr.increaseScore();
+        }
+
+        prevPlayerPosition = playerSnakeHead;
+
+
+        fruitJustEaten = false;
     }
-
-    prevPlayerPosition = playerSnakeHead;
-
-
-    fruitJustEaten = false;
 
 }
