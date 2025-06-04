@@ -8,6 +8,7 @@
 
 #include <queue>
 #include <array>
+#include <cctype>
 
 #include "Board.h"
 #include "Position.h"
@@ -16,15 +17,6 @@
 #include "Player.h"
 
 bool gameIsHappening = true;
-
-char toUpperCase(char ch) {
-
-    if (ch >= 'a' && ch <= 'z') {
-        ch -= 32;
-    }
-
-    return ch;
-}
 
 int main()
 {
@@ -37,7 +29,7 @@ int main()
 
         if (_kbhit()) {
             hitKey = _getch();
-            hitKey = toUpperCase(hitKey);
+            hitKey = static_cast<char>(std::toupper(static_cast<unsigned char>(hitKey))); //maybe i overdid it
         }
 
         game.handleInput(hitKey);
