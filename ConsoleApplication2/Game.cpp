@@ -126,9 +126,10 @@ void Game::print(Board const& board) {
 }
 
 void Game::gameOverText() {
+    Sleep(1500);
     system("cls");
     std::cout << "\n\n\n\t\t--- YOU LOST! ---\n\n"
-              << "\t\t     SCORE: ";
+              << "\t\t   SCORE: ";
     plr.printScore();
     Sleep(3000);
 
