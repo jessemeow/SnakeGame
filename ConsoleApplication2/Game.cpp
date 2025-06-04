@@ -100,8 +100,6 @@ Game::Game() : fruitPos(getNewFruitPosition({})), board(fruitPos), fruitJustEate
 
 void Game::reset(Player& plr, Position& PrevPlayerPosition, char &hitKey) {
 
-    hitKey = 'S';
-
     fruitJustEaten = false;
     plr.resetScore();
 
@@ -111,6 +109,8 @@ void Game::reset(Player& plr, Position& PrevPlayerPosition, char &hitKey) {
 
     fruitPos = getNewFruitPosition(previousPositionsQueue);
     board = Board(fruitPos);
+
+    hitKey = 'S';
 }
 
 void Game::printGameInfo() {
@@ -149,7 +149,7 @@ void Game::exitGame() {
 }
 
 
-void Game::handleInput(char hitKey) {
+void Game::handleInput(char &hitKey) {
 
     if (!isKeyValid(hitKey)) {
         return;
@@ -165,7 +165,7 @@ void Game::handleInput(char hitKey) {
     if (!validDirection) {
 
         gameOverText();
-        reset(plr, prevPlayerPosition, hitKey); //fix hitKey not being reset to 'S'
+        reset(plr, prevPlayerPosition, hitKey);
 
     }
     else {
