@@ -34,16 +34,18 @@ int main()
 
     Game game;
     game.print(game.board);
+    char hitKey = 'S';
+    Sleep(2000);
 
     while (gameIsHappening) {
 
         if (_kbhit()) {
-            char hitKey = _getch();
+            hitKey = _getch();
             hitKey = toUpperCase(hitKey);
-
-            game.handleInput(hitKey);
-            
         }
+
+        game.handleInput(hitKey);
+
         Sleep(SLEEP_TIME);
     }
 }

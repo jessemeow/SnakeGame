@@ -40,7 +40,7 @@ public:
 	Game();
 	Board board;
 	void handleInput(char hitKey);
-	void reset(Player& plr, Position& prevPlayerPosition);
+	void reset(Player& plr, Position& prevPlayerPosition, char &hitKey);
 	void print(Board const& board);
 	void gameOverText();
 	void printGameInfo();

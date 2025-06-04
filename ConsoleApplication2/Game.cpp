@@ -98,7 +98,9 @@ Game::Game() : fruitPos(getNewFruitPosition({})), board(fruitPos), fruitJustEate
 
 
 
-void Game::reset(Player& plr, Position& PrevPlayerPosition) {
+void Game::reset(Player& plr, Position& PrevPlayerPosition, char &hitKey) {
+
+    hitKey = 'S';
 
     fruitJustEaten = false;
     plr.resetScore();
@@ -124,13 +126,20 @@ void Game::print(Board const& board) {
 }
 
 void Game::gameOverText() {
-    reset(plr, prevPlayerPosition);
     system("cls");
     std::cout << "\n\n\n\t\t--- YOU LOST! ---\n\n"
-              << "\t\t    SCORE: ";
+              << "\t\t     SCORE: ";
     plr.printScore();
+    Sleep(3000);
 
-    std::cout << "\n\t   Press W, A, S, D to restart.\n\t\t        ";
+    std::cout << "\n\n\t\t--- RESTARTING --- \n\n";
+    Sleep(1000);
+    std::cout << "\n\t\t        3\n";
+    Sleep(1000);
+    std::cout << "\n\t\t        2\n";
+    Sleep(1000);
+    std::cout << "\n\t\t        1\n";
+    Sleep(1000);
 }
 
 void Game::exitGame() {
@@ -155,6 +164,7 @@ void Game::handleInput(char hitKey) {
     if (!validDirection) {
 
         gameOverText();
+        reset(plr, prevPlayerPosition, hitKey); //fix hitKey not being reset to 'S'
 
     }
     else {
