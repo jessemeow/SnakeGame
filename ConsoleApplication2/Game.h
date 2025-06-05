@@ -1,7 +1,10 @@
 #pragma once
 #include <iostream>
 
-#include <windows.h>
+#include <chrono>
+#include<thread>
+
+#include <conio.h>
 #include <random>
 
 #include <queue>
@@ -43,5 +46,6 @@ public:
 	void gameOverText();
 	void printGameInfo();
 	void exitGame();
+	void Sleep(const int ms) const;
 };
 

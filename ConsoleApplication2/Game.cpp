@@ -1,5 +1,10 @@
 #include "Game.h"
 
+void Game::Sleep(const int ms) const {
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
+
 bool Game::containsPosition(std::queue<Position> positions, const Position& targetPosition) {
     while (!positions.empty()) {
         if (targetPosition.x == positions.front().x && targetPosition.y == positions.front().y) {
@@ -98,6 +103,8 @@ Game::Game() : fruitPos(getNewFruitPosition({})), board(fruitPos), fruitJustEate
     board = Board(fruitPos);
     Position prevPlayerPosition = { 0,0 };
     previousPositionsQueue.push(prevPlayerPosition);
+    
+    Sleep(SLEEP_TIME*5);
 
 }
 

@@ -1,11 +1,5 @@
 #include <iostream>
 
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-
-#include <conio.h>
-#include <windows.h>
-
 #include <queue>
 #include <array>
 #include <cctype>
@@ -23,8 +17,8 @@ int main()
     Game game;
     game.print(game.board);
     char hitKey = 'S';
-    Sleep(2000);
-
+    game.Sleep(1000);
+ 
     while (gameIsHappening) {
 
         if (_kbhit()) {
@@ -34,7 +28,7 @@ int main()
 
         game.handleInput(hitKey);
 
-        Sleep(SLEEP_TIME);
+        game.Sleep(SLEEP_TIME);
     }
 }
 
