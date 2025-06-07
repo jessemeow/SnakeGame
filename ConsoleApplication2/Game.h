@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include <chrono>
-#include<thread>
+#include <thread>
 
 #include <conio.h>
 #include <random>
